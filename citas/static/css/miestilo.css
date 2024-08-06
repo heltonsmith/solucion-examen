@@ -1,0 +1,22 @@
+.fondo{
+    background-image: url(../img/fondo.jpg);
+    background-size: 100% 100%;
+}
+
+.bienvenido{
+    height: 300px;
+}
+
+.login, .registro, .agenda, .cita{
+    background-color:gainsboro;
+}
+
+.cita{
+    margin: auto;
+}
+
+.menu-footer li{
+    list-style: none;
+    float: left;
+    margin-right: 10px;
+}

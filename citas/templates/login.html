@@ -1,0 +1,18 @@
+{% extends "partes/base.html" %}
+
+{% load static %}
+{% block contenido %}
+    <div class="container">
+        <h1 class="text-center">Inicia Sesión</h1>
+        <div class="login m-5 mx-auto p-5">
+            <form action="">
+                {% csrf_token %}
+                <div class="login">
+                    <input type="email" name="" id="" placeholder="Ingresa tu Email" class="form-control"> <br>
+                    <input type="password" name="" id="" placeholder="Ingresa tu Clave" class="form-control"> <br>
+                    <input type="submit" value="Inicia Sesión" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

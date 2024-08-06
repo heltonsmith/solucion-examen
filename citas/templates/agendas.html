@@ -1,0 +1,63 @@
+{% extends "partes/base.html" %}
+
+{% load static %}
+{% block contenido %}
+    <div class="container">
+        <select name="" id="" class="form-control">
+            <option value="">Centro médico</option>
+        </select><br>
+        <select name="" id="" class="form-control">
+            <option value="">Especialidad</option>
+        </select><br>
+        <input type="submit" value="Buscar" class="btn btn-primary">
+        <br><br>
+    </div>
+
+    <div class="container mt-5">
+        <div class="tabla">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Centro médico</th>
+                        <th>Especialidad</th>
+                        <th>Especialista</th>
+                        <th>Horario disponible</th>
+                        <th>Ver agenda</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bienestar IPS</td>
+                        <td>Odontología</td>
+                        <td>Juan Ortega</td>
+                        <td>09:00-10:00 am.</td>
+                        <td><a href="#">Agendar</a></td>
+                    </tr>
+                    <tr>
+                        <td>Bienestar IPS</td>
+                        <td>Odontología</td>
+                        <td>Carla Guzman</td>
+                        <td>15:00-15:45 pm.</td>
+                        <td><a href="#">Agendar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link">Anterior</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Siguiente</a>
+              </li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
