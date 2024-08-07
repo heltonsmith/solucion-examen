@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ContactoForm
+from .forms import ContactoForm, UserRegistrationForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from .models import Contacto
@@ -53,7 +53,15 @@ def login(request):
     return render(request, "login.html")
 
 def registro(request):
-    return render(request, "registro.html")
+    mensaje = ''
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            mensaje = '¡Registro exitoso! Ahora puedes iniciar sesión.'
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'registro.html', {'form': form, 'mensaje': mensaje})
 
 def agenda_nueva(request):
     return render(request, "agenda.html")
