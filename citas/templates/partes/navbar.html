@@ -19,10 +19,19 @@
             <a class="nav-link" href="{% url 'agendas' %}">Agendas</a>
           </li>
         </ul>
+
+
         <div class="d-flex">
-            <a class="btn btn-light" href="{% url 'login' %}">Iniciar Sesión</a>
-            <a class="btn btn-primary" href="{% url 'registro' %}">Regístrate</a>
+            {% if user.is_authenticated %}
+              <a class="btn btn-light" href="{% url 'profile_edit' %}">{{user.username}}</a> 
+              <a class="btn btn-warning" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+              <a class="btn btn-light" href="{% url 'login' %}">Iniciar Sesión</a> 
+              <a class="btn btn-primary" href="{% url 'registro' %}">Regístrate</a>
+            {% endif %}
         </div>
+
+
       </div>
     </div>
   </nav>

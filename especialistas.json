@@ -1,0 +1,42 @@
+[
+    {
+        "model": "citas.especialista",
+        "pk": 1,
+        "fields": {
+            "nombre": "Dr. Juan Pérez",
+            "especialidad": "Cardiología"
+        }
+    },
+    {
+        "model": "citas.especialista",
+        "pk": 2,
+        "fields": {
+            "nombre": "Dra. Laura Gómez",
+            "especialidad": "Neurología"
+        }
+    },
+    {
+        "model": "citas.especialista",
+        "pk": 3,
+        "fields": {
+            "nombre": "Dr. Carlos Rodríguez",
+            "especialidad": "Pediatría"
+        }
+    },
+    {
+        "model": "citas.especialista",
+        "pk": 4,
+        "fields": {
+            "nombre": "Dra. Marta Fernández",
+            "especialidad": "Oncología"
+        }
+    },
+    {
+        "model": "citas.especialista",
+        "pk": 5,
+        "fields": {
+            "nombre": "Dr. Luis Martínez",
+            "especialidad": "Gastroenterología"
+        }
+    }
+]

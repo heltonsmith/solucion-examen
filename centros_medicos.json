@@ -1,0 +1,42 @@
+[
+    {
+        "model": "citas.centromedico",
+        "pk": 1,
+        "fields": {
+            "nombre": "Centro Médico San Juan",
+            "direccion": "Calle Principal 123, Ciudad"
+        }
+    },
+    {
+        "model": "citas.centromedico",
+        "pk": 2,
+        "fields": {
+            "nombre": "Clínica del Norte",
+            "direccion": "Avenida Libertad 456, Ciudad"
+        }
+    },
+    {
+        "model": "citas.centromedico",
+        "pk": 3,
+        "fields": {
+            "nombre": "Hospital General",
+            "direccion": "Calle Secundaria 789, Ciudad"
+        }
+    },
+    {
+        "model": "citas.centromedico",
+        "pk": 4,
+        "fields": {
+            "nombre": "Policlínica del Sur",
+            "direccion": "Plaza Central 321, Ciudad"
+        }
+    },
+    {
+        "model": "citas.centromedico",
+        "pk": 5,
+        "fields": {
+            "nombre": "Centro de Salud ABC",
+            "direccion": "Calle 10, Ciudad"
+        }
+    }
+]

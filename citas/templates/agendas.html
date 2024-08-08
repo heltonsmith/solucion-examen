@@ -3,14 +3,22 @@
 {% load static %}
 {% block contenido %}
     <div class="container">
-        <select name="" id="" class="form-control">
-            <option value="">Centro médico</option>
-        </select><br>
-        <select name="" id="" class="form-control">
-            <option value="">Especialidad</option>
-        </select><br>
-        <input type="submit" value="Buscar" class="btn btn-primary">
-        <br><br>
+        <form method="get" action="{% url 'agendas' %}">
+            <select name="centro_medico" id="centro_medico" class="form-control">
+                <option value="">Centro médico</option>
+                {% for centro in centros %}
+                    <option value="{{ centro.id }}">{{ centro.nombre }}</option>
+                {% endfor %}
+            </select><br>
+            <select name="especialidad" id="especialidad" class="form-control">
+                <option value="">Especialidad</option>
+                {% for especialidad in especialidades %}
+                    <option value="{{ especialidad.id }}">{{ especialidad.nombre }}</option>
+                {% endfor %}
+            </select><br>
+            <input type="submit" value="Buscar" class="btn btn-primary">
+        </form>
+        <br>
     </div>
 
     <div class="container mt-5">
@@ -21,25 +29,26 @@
                         <th>Centro médico</th>
                         <th>Especialidad</th>
                         <th>Especialista</th>
+                        <th>Fecha disponible</th>
                         <th>Horario disponible</th>
                         <th>Ver agenda</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Bienestar IPS</td>
-                        <td>Odontología</td>
-                        <td>Juan Ortega</td>
-                        <td>09:00-10:00 am.</td>
-                        <td><a href="#">Agendar</a></td>
-                    </tr>
-                    <tr>
-                        <td>Bienestar IPS</td>
-                        <td>Odontología</td>
-                        <td>Carla Guzman</td>
-                        <td>15:00-15:45 pm.</td>
-                        <td><a href="#">Agendar</a></td>
-                    </tr>
+                    {% for agenda in agendas %}
+                        <tr>
+                            <td>{{ agenda.centro_medico.nombre }}</td>
+                            <td>{{ agenda.especialista.especialidad }}</td>
+                            <td>{{ agenda.especialista.nombre }}</td>
+                            <td>{{ agenda.fecha_disponible}}</td>
+                            <td>{{ agenda.hora_disponible|date:"H:i" }}</td>
+                            <td><a href="#">Agendar</a></td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5">No hay agendas disponibles.</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -48,14 +57,16 @@
     <div class="container">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link">Anterior</a>
+              <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+                <a class="page-link" href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}">Anterior</a>
               </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Siguiente</a>
+              {% for num in page_obj.paginator.page_range %}
+                  <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                  </li>
+              {% endfor %}
+              <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+                <a class="page-link" href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}">Siguiente</a>
               </li>
             </ul>
         </nav>
