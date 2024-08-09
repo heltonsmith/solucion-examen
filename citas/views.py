@@ -5,11 +5,12 @@ from .forms import (ContactoForm,
                     CustomPasswordChangeForm, AgendaForm)
 from django.contrib import messages
 from django.urls import reverse_lazy
-from .models import Contacto, Profile, Agenda
+from .models import Contacto, Profile, Agenda, CentroMedico, Especialista
 from django.views.generic import CreateView, ListView, View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
+from collections import OrderedDict
 
 # Create your views here.
 def index(request):
@@ -148,10 +149,37 @@ class AgendaListView(ListView):
     model = Agenda
     template_name = 'agendas.html'
     context_object_name = 'agendas'
-    paginate_by = 2  
+    paginate_by = 10  
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        centro_id = self.request.GET.get('centro_medico')
+        especialista_id = self.request.GET.get('especialidad')
+
+        if centro_id and centro_id != '0':
+            queryset = queryset.filter(centro_medico_id=centro_id)
+
+        if especialista_id and especialista_id != '0':
+            especialidad = Especialista.objects.get(id=especialista_id).especialidad
+            queryset = queryset.filter(especialista__especialidad=especialidad)
+
+        return queryset
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Aquí puedes añadir datos adicionales al contexto si es necesario
+        context['centros'] = CentroMedico.objects.all()
+
+        especialistas = Especialista.objects.all()
+
+        especialistas_unicos = OrderedDict()
+
+        for especialista in especialistas:
+            if especialista.especialidad not in especialistas_unicos:
+                especialistas_unicos[especialista.especialidad] = especialista
+
+        especialistas_unicos_list = list(especialistas_unicos.values())
+        context['especialidades'] = especialistas_unicos_list
+
         return context

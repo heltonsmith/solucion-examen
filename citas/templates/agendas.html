@@ -5,15 +5,19 @@
     <div class="container">
         <form method="get" action="{% url 'agendas' %}">
             <select name="centro_medico" id="centro_medico" class="form-control">
-                <option value="">Centro médico</option>
+                <option value="0">-- Todos los centros médicos --</option>
                 {% for centro in centros %}
-                    <option value="{{ centro.id }}">{{ centro.nombre }}</option>
+                    <option value="{{ centro.id }}">
+                        {{ centro.nombre }}
+                    </option>
                 {% endfor %}
             </select><br>
             <select name="especialidad" id="especialidad" class="form-control">
-                <option value="">Especialidad</option>
+                <option value="0">-- Todas las especialidades --</option>
                 {% for especialidad in especialidades %}
-                    <option value="{{ especialidad.id }}">{{ especialidad.nombre }}</option>
+                    <option value="{{ especialidad.id }}">
+                        {{ especialidad.especialidad }}
+                    </option>
                 {% endfor %}
             </select><br>
             <input type="submit" value="Buscar" class="btn btn-primary">
@@ -71,4 +75,26 @@
             </ul>
         </nav>
     </div>
+
+    <script>
+        // Obtén la URL actual
+        const url = new URL(window.location.href);
+
+        // Usa URLSearchParams para obtener los parámetros de la URL
+        const params = new URLSearchParams(url.search);
+        const centro_medico = params.get('centro_medico');
+        const especialidad = params.get('especialidad');
+
+        // Obtén el elemento select
+        const select_centro_medico = document.getElementById('centro_medico');
+        const select_especialidad= document.getElementById('especialidad');
+
+        if(centro_medico != null){
+            select_centro_medico.value = centro_medico;
+        }
+
+        if(especialidad != null){
+            select_especialidad.value = especialidad;
+        }
+    </script>
 {% endblock %}
