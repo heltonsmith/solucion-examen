@@ -4,13 +4,18 @@
 {% block contenido %}
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center cita p-5">
-                <h1>Odontología</h1>
-                <p>Bienestar IPS</p>
-                <p>Juan Perez</p>
-                <p>10:00-10:45 am</p>
-                <input type="submit" value="Confirmar Cita" class="btn btn-primary">
-            </div>
+
+            {% if message %}
+                <h1>Error: {{message}}</h1>
+            {% else %}
+                <div class="col-12 text-center cita p-5">
+                    <h1>{{agenda.especialista.especialidad}}</h1>
+                    <p>{{agenda.centro_medico}}</p>
+                    <p>{{agenda.especialista.nombre}}</p>
+                    <p>Fecha: {{agenda.fecha_disponible}} - Hora: {{agenda.hora_disponible|date:"H:i"}}</p>
+                    <input type="submit" value="Confirmar Cita" class="btn btn-primary">
+                </div>
+            {% endif %}          
         </div>
     </div>
 {% endblock %}

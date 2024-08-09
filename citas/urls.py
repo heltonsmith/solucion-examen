@@ -22,5 +22,5 @@ urlpatterns = [
     path('profile/edit/', UserProfileUpdateView.as_view(), name='profile_edit'),
     path('agenda/nueva/', CreateAgendaView.as_view(), name="agenda_nueva"),
     path('agendas', AgendaListView.as_view(), name="agendas"),
-    path('agenda/id/cita', cita, name="cita"),
+    path('agenda/<int:id>/cita', cita, name="cita"),
 ]

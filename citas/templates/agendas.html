@@ -46,7 +46,7 @@
                             <td>{{ agenda.especialista.nombre }}</td>
                             <td>{{ agenda.fecha_disponible}}</td>
                             <td>{{ agenda.hora_disponible|date:"H:i" }}</td>
-                            <td><a href="#">Agendar</a></td>
+                            <td><a href="{% url 'cita' agenda.id %}">Agendar</a></td>
                         </tr>
                     {% empty %}
                         <tr>
@@ -62,15 +62,15 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
               <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
-                <a class="page-link" href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}">Anterior</a>
+                <a class="page-link" href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% if request.GET.centro_medico %}&centro_medico={{ request.GET.centro_medico }}{% endif %}{% if request.GET.especialidad %}&especialidad={{ request.GET.especialidad }}{% endif %}{% endif %}">Anterior</a>
               </li>
               {% for num in page_obj.paginator.page_range %}
                   <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    <a class="page-link" href="?page={{ num }}{% if request.GET.centro_medico %}&centro_medico={{ request.GET.centro_medico }}{% endif %}{% if request.GET.especialidad %}&especialidad={{ request.GET.especialidad }}{% endif %}">{{ num }}</a>
                   </li>
               {% endfor %}
               <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
-                <a class="page-link" href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}">Siguiente</a>
+                <a class="page-link" href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% if request.GET.centro_medico %}&centro_medico={{ request.GET.centro_medico }}{% endif %}{% if request.GET.especialidad %}&especialidad={{ request.GET.especialidad }}{% endif %}{% endif %}">Siguiente</a>
               </li>
             </ul>
         </nav>

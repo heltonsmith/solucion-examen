@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from .forms import (ContactoForm, 
                     UserRegistrationForm, LoginForm, 
                     UserUpdateForm, ProfileUpdateForm, 
@@ -85,8 +86,13 @@ def logout_user(request):
     logout(request)
     return render(request, "logout.html")
 
-def cita(request):
-    return render(request, "cita.html")
+def cita(request, id):
+    try:
+        agenda = get_object_or_404(Agenda, id=id)
+        # Lógica de la vista
+        return render(request, 'cita.html', {'agenda': agenda})
+    except Http404:
+        return render(request, 'cita.html', {'message': 'No existe cita'})
 
 '''
     Edit User
@@ -149,7 +155,7 @@ class AgendaListView(ListView):
     model = Agenda
     template_name = 'agendas.html'
     context_object_name = 'agendas'
-    paginate_by = 10  
+    paginate_by = 2  
 
     def get_queryset(self):
         queryset = super().get_queryset()
