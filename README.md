@@ -8,20 +8,8 @@ La Plataforma de Reservación de Citas Médicas es una aplicación web diseñada
 
 A continuación se presentan capturas de pantalla de las principales vistas del proyecto:
 
-### Home
-![Home](ruta/a/tu/captura_home.png)
-
 ### Inicio de Sesión
-![Inicio de Sesión](ruta/a/tu/captura_login.png)
-
-### Productos
-![Productos](ruta/a/tu/captura_productos.png)
-
-### Detalles del Producto (`Producto/id`)
-![Producto](ruta/a/tu/captura_producto.png)
-
-### Nueva Auditoría (`Auditoria/nueva`)
-![Nueva Auditoría](ruta/a/tu/captura_auditoria_nueva.png)
+![Captura de pantalla 2024-08-12 104130](https://github.com/user-attachments/assets/4c516599-acd6-4d73-ad81-6f00c2cbddae)
 
 ## Prerrequisitos o Dependencias a Instalar
 
