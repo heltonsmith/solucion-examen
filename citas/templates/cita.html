@@ -9,11 +9,18 @@
                 <h1>Error: {{message}}</h1>
             {% else %}
                 <div class="col-12 text-center cita p-5">
-                    <h1>{{agenda.especialista.especialidad}}</h1>
-                    <p>{{agenda.centro_medico}}</p>
-                    <p>{{agenda.especialista.nombre}}</p>
-                    <p>Fecha: {{agenda.fecha_disponible}} - Hora: {{agenda.hora_disponible|date:"H:i"}}</p>
-                    <input type="submit" value="Confirmar Cita" class="btn btn-primary">
+                    <h1>{{ agenda.especialista.especialidad }}</h1>
+                    <p>{{ agenda.centro_medico }}</p>
+                    <p>{{ agenda.especialista.nombre }}</p>
+                    <p>Fecha: {{ agenda.fecha_disponible }} - Hora: {{ agenda.hora_disponible|date:"H:i" }}</p>
+                    
+                    <!-- Formulario que envía los datos por GET -->
+                    <form method="POST" action="{% url 'confirmar_agenda' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="agenda_id" value="{{ agenda.id }}">
+                        <input type="hidden" name="user_id" value="{{ request.user.id }}">
+                        <input type="submit" value="Confirmar Cita" class="btn btn-primary">
+                    </form>
                 </div>
             {% endif %}          
         </div>

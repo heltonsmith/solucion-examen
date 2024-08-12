@@ -6,12 +6,14 @@ from .forms import (ContactoForm,
                     CustomPasswordChangeForm, AgendaForm)
 from django.contrib import messages
 from django.urls import reverse_lazy
-from .models import Contacto, Profile, Agenda, CentroMedico, Especialista
+from .models import Contacto, Profile, Agenda, CentroMedico, Especialista, Cita
 from django.views.generic import CreateView, ListView, View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from collections import OrderedDict
+from django.db import IntegrityError
 
 # Create your views here.
 def index(request):
@@ -137,6 +139,18 @@ class UserProfileUpdateView(LoginRequiredMixin, View):
 
 class CreateAgendaView(View):
     template_name = 'agenda.html'
+
+
+    def dispatch(self, request, *args, **kwargs):
+        # Verifica si el usuario está autenticado
+        if not request.user.is_authenticated:
+            return redirect('index')  # Redirige al home si no está autenticado
+        # Verifica si el usuario tiene un perfil y si es administrador
+        if request.user.profile.tipo_usuario != 'administrador':
+            return redirect('index')  # Redirige al home si no es administrador
+        # Si pasa todas las verificaciones, continúa con la solicitud
+        return super().dispatch(request, *args, **kwargs)
+
     
     def get(self, request, *args, **kwargs):
         form = AgendaForm()
@@ -169,6 +183,9 @@ class AgendaListView(ListView):
         if especialista_id and especialista_id != '0':
             especialidad = Especialista.objects.get(id=especialista_id).especialidad
             queryset = queryset.filter(especialista__especialidad=especialidad)
+            
+        agendas_con_citas = Cita.objects.values_list('agenda_id', flat=True)
+        queryset = queryset.exclude(id__in=agendas_con_citas)
 
         return queryset
 
@@ -189,3 +206,25 @@ class AgendaListView(ListView):
         context['especialidades'] = especialistas_unicos_list
 
         return context
+
+def confirmar_agenda(request):
+    if request.method == 'POST':
+        agenda_id = request.POST['agenda_id']
+        user_id = request.POST['user_id']
+        mensaje = "Cita reservada!"
+
+        try:
+            # Intenta crear la cita
+            user = get_object_or_404(User, id=user_id)
+            agenda = get_object_or_404(Agenda, id=agenda_id)
+
+            Cita.objects.create(agenda=agenda, user=user, mensaje=mensaje)
+            
+            # Lógica de la vista
+            return render(request, 'confirmar_agenda.html', {'agenda': agenda})
+        except IntegrityError:
+            # Maneja el error de integridad cuando ya existe una cita para esta agenda
+            mensaje_error = "Esta cita ya ha sido confirmada."
+            return render(request, 'cita.html', {'message': mensaje_error})
+        except Http404:
+            return render(request, 'cita.html', {'message': 'No existe cita'})

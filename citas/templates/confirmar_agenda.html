@@ -1,0 +1,10 @@
+{% extends "partes/base.html" %}
+
+{% load static %}
+{% block contenido %}
+    <h1 class="text-center">Agenda confirmada con éxito!</h1>
+    <h1 class="text-center">{{ agenda.especialista.especialidad }}</h1>
+    <p class="text-center">{{ agenda.centro_medico }}</p>
+    <p class="text-center">{{ agenda.especialista.nombre }}</p>
+    <p class="text-center">Fecha: {{ agenda.fecha_disponible }} - Hora: {{ agenda.hora_disponible|date:"H:i" }}</p>
+{% endblock %}

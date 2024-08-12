@@ -10,7 +10,8 @@ from .views import (
     ContactoListView,
     UserProfileUpdateView,
     CreateAgendaView,
-    AgendaListView)
+    AgendaListView,
+    confirmar_agenda)
 
 urlpatterns = [
     path('', index, name="index"),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('agenda/nueva/', CreateAgendaView.as_view(), name="agenda_nueva"),
     path('agendas', AgendaListView.as_view(), name="agendas"),
     path('agenda/<int:id>/cita', cita, name="cita"),
+    path('confirmar/', confirmar_agenda, name="confirmar_agenda"),
 ]

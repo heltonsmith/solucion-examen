@@ -13,7 +13,11 @@
             <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'agenda_nueva' %}">Nueva agenda</a>
+            {% if user.is_authenticated %}
+              {% if user.profile.tipo_usuario == 'administrador' %}
+                <a class="nav-link" href="{% url 'agenda_nueva' %}">Nueva agenda</a>
+              {% endif %}
+            {% endif %}
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'agendas' %}">Agendas</a>

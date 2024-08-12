@@ -47,3 +47,12 @@ class Agenda(models.Model):
 
     def __str__(self):
         return "Agenda: " + str(self.fecha_disponible) + " - Hora: " + str(self.hora_disponible) + " - Especialista: " + self.especialista.nombre + " - Centro: " + self.centro_medico.nombre
+    
+
+class Cita(models.Model):
+    agenda = models.OneToOneField(Agenda, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mensaje = models.TextField()
+
+    def __str__(self):
+        return self.mensaje
